@@ -989,3 +989,12 @@ CREATE TABLE blog_comunidades (
     UNIQUE KEY unique_blog_comunidad (blog_id, comunidad_id)
 );
 
+-- Insertar la comunidad por defecto
+INSERT INTO comunidades (id, nombre, color, descripcion) VALUES (1, 'Sin Registrar', '', 'Comunidad por defecto para usuarios y blogs no segmentados.');
+-- Actualizar los registros existentes en users_demographic para que apunten a la comunidad por defecto
+ALTER TABLE users_demographic
+  MODIFY COLUMN comunidad_id INT NOT NULL DEFAULT 1;
+-- Actualizar los registros existentes en users_demographic para que apunten a la comunidad por defecto
+UPDATE users_demographic
+  SET  comunidad_id = 1
+  WHERE comunidad_id = 0;
