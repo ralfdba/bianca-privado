@@ -836,7 +836,6 @@ CREATE TABLE `users_health_finance` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
-
 --
 -- Table structure for table `users_health_goldberg`
 --
@@ -885,7 +884,6 @@ CREATE TABLE `users_health_phisically` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
-
 --
 -- Table structure for table `users_reappointments`
 --
@@ -903,7 +901,6 @@ CREATE TABLE `users_reappointments` (
   CONSTRAINT `users_reappointments_ibfk_1` FOREIGN KEY (`appointment_id`) REFERENCES `users_appointments` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
 
 --
 -- Table structure for table `users_vaccinations`
@@ -978,16 +975,18 @@ RENAME TABLE bianca.blog TO bianca.blogs;
 
 ALTER TABLE bianca.blogs DROP COLUMN comunidad_id;
 
-CREATE TABLE blog_comunidades (
-    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    blog_id INT NOT NULL,
-    comunidad_id INT NOT NULL,
-    created_at timestamp DEFAULT CURRENT_TIMESTAMP,
-    
-    FOREIGN KEY (blog_id) REFERENCES blogs(id) ON DELETE CASCADE,
-    FOREIGN KEY (comunidad_id) REFERENCES comunidades(id) ON DELETE CASCADE,
-    UNIQUE KEY unique_blog_comunidad (blog_id, comunidad_id)
-);
+-- bianca.blog_comunidades definition
+CREATE TABLE `blog_comunidades` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `blog_id` int(11) NOT NULL,
+  `comunidad_id` int(11) NOT NULL,
+  `created_at` datetime DEFAULT current_timestamp(),
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `unique_blog_comunidad` (`blog_id`,`comunidad_id`),
+  KEY `comunidad_id` (`comunidad_id`),
+  CONSTRAINT `blog_comunidades_ibfk_1` FOREIGN KEY (`blog_id`) REFERENCES `blogs` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `blog_comunidades_ibfk_2` FOREIGN KEY (`comunidad_id`) REFERENCES `comunidades` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- Insertar la comunidad por defecto
 INSERT INTO comunidades (id, nombre, color, descripcion) VALUES (1, 'Sin Registrar', '', 'Comunidad por defecto para usuarios y blogs no segmentados.');
