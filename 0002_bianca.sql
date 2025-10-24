@@ -41,3 +41,6 @@ CREATE TABLE `exam_jobs` (
   KEY `idx_exam_jobs_user_id` (`user_id`),
   KEY `idx_exam_jobs_status` (`status`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+
+-- feature/ver_examenes_pendientes
+ALTER TABLE `exam_jobs` ADD `file_uuid` varchar(36) NULL;
